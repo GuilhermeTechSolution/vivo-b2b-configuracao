@@ -1,0 +1,77 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+# Faz o build com o Maven
+build:
+  image: maven:3.6.3-openjdk-17
+  stage: build
+  cache:
+    key: maven-cache
+    paths:
+      - .m2/repository
+  script:
+    - echo "Iniciando o build do projeto com Maven..."
+    - export APP_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+    - echo "Versão da aplicação - $APP_VERSION"
+    - echo "APP_VERSION=$APP_VERSION" > version.txt
+    - mvn clean package -DskipTests
+  artifacts:
+    paths:
+      - target/*.war
+      - version.txt
+    expire_in: 1 week
+    reports:
+      dotenv: version.txt
+  tags:
+    - ci
+    - kubernetes
+
+deploy-develop:
+  image: quay.io/buildah/stable
+  stage: deploy
+  variables:
+    IMAGE_NAME: harbor.devops-vivo.telcostack.com.br/van-homol/vivo-b2b-configuracao
+    BUILDAH_ISOLATION: chroot
+    STORAGE_DRIVER: vfs
+    _BUILDAH_STARTED_IN_USERNS: ""
+  before_script:
+    - echo "$HARBOR_PASSWORD" | buildah login --username "$HARBOR_USERNAME" --password-stdin harbor.devops-vivo.telcostack.com.br
+  script:
+    - echo "Carregando a versão da aplicação..."
+    - source version.txt
+    - echo "Construindo a imagem Docker com a tag $IMAGE_NAME:$APP_VERSION..."
+    - buildah bud -t $IMAGE_NAME:$APP_VERSION .
+    - echo "Fazendo o push da imagem para o Container Registry no Harbor..."
+    - buildah push $IMAGE_NAME:$APP_VERSION
+  dependencies:
+    - build
+  only:
+    - develop
+  tags:
+    - ci
+    - kubernetes
+
+deploy-main:
+  image: quay.io/buildah/stable
+  stage: deploy
+  variables:
+    IMAGE_NAME: harbor.devops-vivo.telcostack.com.br/van-prod/vivo-b2b-configuracao
+    BUILDAH_ISOLATION: chroot
+    STORAGE_DRIVER: vfs
+    _BUILDAH_STARTED_IN_USERNS: ""
+  before_script:
+    - echo "$HARBOR_PASSWORD" | buildah login --username "$HARBOR_USERNAME" --password-stdin harbor.devops-vivo.telcostack.com.br
+  script:
+    - echo "Carregando a versão da aplicação..."
+    - source version.txt
+    - echo "Construindo a imagem Docker com a tag $IMAGE_NAME:$APP_VERSION..."
+    - buildah bud -t $IMAGE_NAME:$APP_VERSION .
+    - echo "Fazendo o push da imagem para o Container Registry no Harbor..."
+    - buildah push $IMAGE_NAME:$APP_VERSION
+  dependencies:
+    - build
+  only:
+    - main
+  tags:
+    - ci
+    - kubernetes

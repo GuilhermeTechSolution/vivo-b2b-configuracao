@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>br.com.iatapp</groupId>
+	<artifactId>vivo-b2b-configuracao</artifactId>
+	<version>1.0.3</version>
+	<packaging>war</packaging>
+	
+	<name>vivo-b2b-configuracao</name>
+	<description>Vivo B2B Configuracao</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.1.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<mysql-connector-java.version>8.0.12</mysql-connector-java.version>
+		<apache-commons-lang.version>3.8</apache-commons-lang.version>
+		<javax-servlet-api.version>4.0.1</javax-servlet-api.version>
+		<jsp-api.version>2.3.3</jsp-api.version>
+		<jstl.version>1.2</jstl.version>
+		<org-json.version>20180813</org-json.version>
+		
+		<!-- Apache Commons Net -->
+		<apache-commons-net.version>3.6</apache-commons-net.version>
+		
+		<!-- Apache Commons Validator -->
+		<apache-commons-validator.version>1.5.1</apache-commons-validator.version>		
+		
+		<!-- Apache Commons IO -->
+		<apache-commons-io.version>2.6</apache-commons-io.version>
+		
+		<!--Email -->
+		<commons-email.version>1.4</commons-email.version>		
+		<javax.mail-api.version>1.5.6</javax.mail-api.version>
+		
+		<!-- Logging -->
+		<log4j.version>2.17.1</log4j.version>
+
+		<jcl-over-slf4j.version>1.7.25</jcl-over-slf4j.version>
+		
+		<!-- Apache POI -->
+		<apache.poi.version>3.16</apache.poi.version>
+		
+		<apache-http-client.version>4.5.9</apache-http-client.version>
+	</properties>
+
+	<dependencies>
+	
+		<!-- Spring Web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+		    	<exclusion>
+		      		<groupId>org.springframework.boot</groupId>
+		      		<artifactId>spring-boot-starter-logging</artifactId>
+		    	</exclusion>
+		  	</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+			<exclusions>
+		    	<exclusion>
+		      		<groupId>org.springframework.boot</groupId>
+		      		<artifactId>spring-boot-starter-logging</artifactId>
+		    	</exclusion>
+		  	</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- Spring MongoDB -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		
+		<!-- Mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		
+		<!-- Apache Commons Lang -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>${apache-commons-lang.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		
+		<!-- Apache Commons Net -->
+		<dependency>
+		    <groupId>commons-net</groupId>
+		    <artifactId>commons-net</artifactId>
+		    <version>${apache-commons-net.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		
+		<!-- Apache Commons Validator -->
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>${apache-commons-validator.version}</version><!--$NO-MVN-MAN-VER$-->
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${apache-commons-io.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		
+		<!-- Servlet Api -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>${javax-servlet-api.version}</version><!--$NO-MVN-MAN-VER$-->
+		    <scope>provided</scope>
+		</dependency>
+
+		<!-- Jsp -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>${jsp-api.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+			
+		<!-- JSTL -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		
+		<!-- Org JSON -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>${org-json.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		
+		<!-- Email -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>${commons-email.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>${javax.mail-api.version}</version><!--$NO-MVN-MAN-VER$-->
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version><!--$NO-MVN-MAN-VER$-->
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version><!--$NO-MVN-MAN-VER$-->
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version><!--$NO-MVN-MAN-VER$-->
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${jcl-over-slf4j.version}</version><!--$NO-MVN-MAN-VER$-->
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Apache POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${apache.poi.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${apache.poi.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Apache Http Client -->
+		<dependency>
+		  	<groupId>org.apache.httpcomponents</groupId>
+		  	<artifactId>httpclient</artifactId>
+		  	<version>${apache-http-client.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.googlecode.java-ipv6</groupId>
+		    <artifactId>java-ipv6</artifactId>
+		    <version>0.17</version>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<finalName>vivo-b2b-configuracao</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
