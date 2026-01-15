@@ -11,7 +11,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(properties = {
 		"spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,"
 				+ "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,"
-				+ "org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration" })
+				+ "org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,"
+				+ "org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration",
+		"spring.data.mongodb.repositories.enabled=false"
+})
 public class OttapStaterTemplateApplicationTests {
 
 	@MockBean
